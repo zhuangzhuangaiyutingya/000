@@ -793,6 +793,8 @@ def main():
             ### 系统日志记录:
             - 所有分析操作都会被记录在您的用户账户中
             - 您的所有分析结果可以导出保存
+
+            点击此处下载权重文件：https://pan.baidu.com/s/1uwB3ep_HNAWFYmtvL07GLQ?pwd=wzzz
             """)
 
 
