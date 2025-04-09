@@ -159,7 +159,7 @@ class AuthenticationSystem:
 # 显示用户登录界面
 def show_login_page(auth_system):
     """显示登录界面"""
-    st.title("工业热误差预测系统 - 用户登录")
+    st.title("静压主轴热伸长误差预测系统 - 用户登录")
 
     login_username = st.text_input("用户名", key="login_username")
     login_password = st.text_input("密码", type="password", key="login_password")
@@ -186,7 +186,7 @@ def show_login_page(auth_system):
 # 显示用户注册界面
 def show_register_page(auth_system):
     """显示注册界面"""
-    st.title("工业热误差预测系统 - 用户注册")
+    st.title("静压主轴热伸长误差预测系统 - 用户注册")
 
     reg_username = st.text_input("用户名 (必填)", key="reg_username")
     reg_password = st.text_input("密码 (必填)", type="password", key="reg_password")
