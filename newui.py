@@ -166,6 +166,9 @@ def show_login_page(auth_system):
 
     login_button = st.button("登录")
 
+    # 添加注册按钮，切换到注册页面
+    register_button = st.button("注册新账户")
+
     if login_button:
         if not login_username or not login_password:
             st.error("请输入用户名和密码")
@@ -180,7 +183,9 @@ def show_login_page(auth_system):
             else:
                 st.error(message)
 
-    st.markdown("没有账号？[点击注册](?page=register)")
+    if register_button:
+        st.session_state["page"] = "register"
+        st.rerun()
 
 
 # 显示用户注册界面
@@ -201,23 +206,40 @@ def show_register_page(auth_system):
         except Exception as e:
             st.error(f"头像预览失败: {str(e)}")
 
-    register_button = st.button("注册")
+    # 添加表单验证
+    form_valid = True
+    error_msg = ""
 
-    if register_button:
+    if st.button("注册"):
+        # 验证输入
         if not reg_username or not reg_password or not reg_fullname:
-            st.error("请填写所有必填字段")
+            form_valid = False
+            error_msg = "请填写所有必填字段"
+        elif len(reg_password) < 6:
+            form_valid = False
+            error_msg = "密码长度至少为6个字符"
         elif reg_password != reg_confirm_password:
-            st.error("两次输入的密码不一致")
-        else:
+            form_valid = False
+            error_msg = "两次输入的密码不一致"
+
+        if form_valid:
             success, message = auth_system.register_user(
                 reg_username, reg_password, reg_fullname, reg_avatar
             )
             if success:
                 st.success(message + " 请使用新账号登录。")
+                # 注册成功后自动回到登录页面
+                st.session_state["page"] = "login"
+                st.rerun()
             else:
                 st.error(message)
+        else:
+            st.error(error_msg)
 
-    st.markdown("已有账号？[点击登录](?page=login)")
+    # 返回登录页面按钮
+    if st.button("返回登录"):
+        st.session_state["page"] = "login"
+        st.rerun()
 
 
 # 显示用户信息
@@ -249,6 +271,7 @@ def display_user_info(auth_system, username):
         if st.sidebar.button("退出登录"):
             st.session_state["authenticated"] = False
             st.session_state["username"] = None
+            st.session_state["page"] = "login"
             st.rerun()
     else:
         st.sidebar.error("无法加载用户信息")
@@ -587,21 +610,26 @@ def main():
         st.session_state["authenticated"] = False
     if "username" not in st.session_state:
         st.session_state["username"] = None
+    if "page" not in st.session_state:
+        st.session_state["page"] = "login"
 
     # 初始化认证系统
     auth_system = AuthenticationSystem()
 
-    # 获取当前页面
-    page = st.query_params.get("page", ["login"])[0]
-
     # 检查用户是否已经登录
     if not st.session_state["authenticated"]:
-        if page == "login":
+        current_page = st.session_state["page"]
+
+        if current_page == "login":
             # 显示登录页面
             show_login_page(auth_system)
-        elif page == "register":
+        elif current_page == "register":
             # 显示注册页面
             show_register_page(auth_system)
+        else:
+            # 默认显示登录页面
+            st.session_state["page"] = "login"
+            st.rerun()
     else:
         # 显示主应用程序
         username = st.session_state["username"]
@@ -795,9 +823,9 @@ def main():
             - 您的所有分析结果可以导出保存
 
             点击此处下载权重文件：https://pan.baidu.com/s/1uwB3ep_HNAWFYmtvL07GLQ?pwd=wzzz
-            
+
             点击此处下载测试视频：https://pan.baidu.com/s/1sZrLqNnBBDeYkdjG18pMsg?pwd=wzzz
-            
+
             联系作者：wzz_123123@163.com
             """)
 
