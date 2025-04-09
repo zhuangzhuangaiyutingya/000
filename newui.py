@@ -795,6 +795,7 @@ def main():
             - 您的所有分析结果可以导出保存
 
             点击此处下载权重文件：https://pan.baidu.com/s/1uwB3ep_HNAWFYmtvL07GLQ?pwd=wzzz
+            
             点击此处下载测试视频：https://pan.baidu.com/s/1sZrLqNnBBDeYkdjG18pMsg?pwd=wzzz
             
             联系作者：wzz_123123@163.com
