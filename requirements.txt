@@ -97,7 +97,6 @@ ninja>=1.11.1.4
 numpy>=1.26.4
 oauthlib>=3.2.2
 onnx>=1.16.0
-opencv-python-headless>=4.10.0
 openpyxl>=3.1.5
 optree>=0.10.0
 osam>=0.2.0
@@ -218,3 +217,4 @@ xlrd>=2.0.1
 yarl>=1.9.4
 yfinance>=0.2.54
 zipp>=3.18.0
+opencv-python-headless==4.8.0.76
