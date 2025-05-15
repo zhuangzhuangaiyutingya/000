@@ -18,7 +18,6 @@ import json
 import base64
 from datetime import datetime
 
-
 # ===== 用户认证系统 =====
 
 class AuthenticationSystem:
