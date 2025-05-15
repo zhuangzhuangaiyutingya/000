@@ -336,9 +336,11 @@ def preprocess_image(image):
         # 确保图像是RGB格式
         if isinstance(image, np.ndarray):
             # 如果是OpenCV图像(numpy array)，转换为PIL
-            if image.shape[2] == 3:  # 确保有3个通道
+            try:
+                # 尝试使用cv2
                 image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-            else:
+            except:
+                # 如果cv2失败，尝试直接转换
                 image = Image.fromarray(image)
         else:
             # 如果已经是PIL图像，确保是RGB
